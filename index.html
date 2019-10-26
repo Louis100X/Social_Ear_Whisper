@@ -16,19 +16,39 @@
         <option value='13'>Broadway</option>
     </select>
 
+
+    <select name='Jokes' id='option'>
+        <option value='0'></option>
+        <option value='random'>Random 1!!!</option>
+        <option value='ten'>Random 10!!!</option>
+    </select>
+
     <div id="container"></div>
     <button id='clear'>Reset</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script text="text/javascript">
         // Universal Variables
         var dropdwn = $('#Qtype');
+
+        var jokeOp = $('#option');
+
         var resetBtn = $('#clear');
 
         dropdwn.change("click", function (event) {
             event.preventDefault();
             renderTriviaData();
         });
+
+
+        jokeOp.change("click", function (event) {
+            event.preventDefault();
+            renderJokeData();
+        });
+
+        resetBtn.on('click', function (event) {
+
         resetBtn.on('click', function(event){
+
             $('#container').empty();
         });
 
@@ -64,6 +84,109 @@
                         console.log(question);
                         console.log(answer);
                     };
+                    //             // var genKnow = 
+                    //             // // id 9
+                    //             // var books =
+                    //             // // id 10
+                    //             // var film =
+                    //             // // id 11
+                    //             // var music=;
+                    //             // // id 12
+                    //             // var broadway=;
+                    //             // // id 13
+                    //             // var tv=;
+                    //             // // id 14
+                    //             // var videoGames=;
+                    //             // // id 15
+                    //             // var boardGame=;
+                    //             // // id 16
+                    //             // var science=;
+                    //             // // id 17
+                    //             // var computers=;
+                    //             // // id 18
+                    //             // var math=;
+                    //             // // id 19
+                    //             // var mythology=;
+                    //             // // id 20
+                    //             // var sports=;
+                    //             // // id 21
+                    //             // var geography=;
+                    //             // // id 22
+                    //             // var history=;
+                    //             // // id 23
+                    //             // var politics =;
+                    //             // // id 24
+                    //             // var art =;
+                    //             // // id 25
+                    //             // var celebs=;
+                    //             // // id 26
+                    //             // var animals=;
+                    //             // // id 27
+                    //             // var vehicles= ;
+                    //             // // id 28
+                    //             // var comics = ;
+                    //             // // id 29
+                    //             // var gadgets = ;
+                    //             // // 30
+                    //             // var animeManga = ;
+                    //             // // 31
+                    //             // var cartoons = ;
+                    //             // // id 32
+                });
+        }
+
+        function renderJokeData() {
+            // jokes API URL
+            // https:id official-joke-api.appspot.com/"category"/random
+            // response.id or type or setup or punchline
+            // either random or ten
+            category = $('#option').val();
+
+            jokeURL = 'https://official-joke-api.appspot.com/jokes/' + category;
+            $.ajax({
+
+                url: jokeURL,
+                method: "GET"
+            })
+                .then(function (response) {
+                    console.log(response)
+                    var jokeData = response
+                    if (category === 'ten') {
+                        for (i = 0; i < jokeData.length; i++) {
+
+                            var contentDiv = $('#container')
+                            var qContent = $('<h1>')
+                            var aContent = $('<p>')
+
+                            var jokeSetup = response[i].setup;
+                            var jokePayoff = response[i].punchline;
+
+                            qContent.text(jokeSetup);
+                            aContent.text(jokePayoff);
+
+                            contentDiv.append(qContent);
+                            contentDiv.append(aContent);
+                        };
+                    } else if (category === 'random') {
+                        var contentDiv = $('#container')
+                        var qContent = $('<h1>')
+                        var aContent = $('<p>')
+
+                        var jokeSetup = response.setup;
+                        var jokePayoff = response.punchline;
+
+                        qContent.text(jokeSetup);
+                        aContent.text(jokePayoff);
+
+                        contentDiv.append(qContent);
+                        contentDiv.append(aContent);
+
+                    }
+
+                });
+        };
+
+
                     // var genKnow = 
                     // // id 9
                     // var books =
@@ -131,6 +254,7 @@
         //         });
         // };
         // renderJokeData();
+
 
 
 

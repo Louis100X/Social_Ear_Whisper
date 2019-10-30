@@ -21,7 +21,7 @@
     <div class="nav-wrapper">
       <div class="nav-content">
         <span class="nav-title">Social Ear Whisper</span>
-        <i class='exampleQuote1'>"If one door closes and another door opens... your house is probably haunted."</i>
+        <i class='center-align'>"If one door closes and another door opens... your house is probably haunted."</i>
       </div>
     </div>
   </nav>
@@ -32,8 +32,8 @@
       <div class="col s12">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
-            <span class="card-title">Welcome!</span>
-            <p>"Don't cry because it's over, smile because it happened." -- Dr. Seuss</p>
+            <span class="card-title center-align">Welcome!</span>
+            <p class="center-align">"Don't cry because it's over, smile because it happened." -- Dr. Seuss</p>
           </div>
           <div class="card-action">
             <!-- Trivia Dropdwn -->
@@ -79,10 +79,15 @@
         </div>
       </div>
     </div>
-  
-    <button id="clear">Resets</button>
+    <div class="row">
+      <div class="col s5"></div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn-large" id="clear">Resets</a>
+      </div>
+      <div class="col s5"></div>
+    </div>
 
-    <div class='col s 12' id="renderContent">
+    <div class='col s12 center-align' id="renderContent">
       ​
     </div>
 
@@ -112,7 +117,7 @@
 
       $('#renderContent').empty();
     });
-// needs to prepend current content
+    // needs to prepend current content, maybe put the content in a card to hid answers?
     function renderTriviaData() {
       // gets values for URL based on count and type
       var jokeCount = "5";
@@ -130,7 +135,8 @@
           fiveQData = response.results
           for (i = 0; i < fiveQData.length; i++) {
             var contentDiv = $('#renderContent')
-            var qContent = $('<h1>')
+            var collectedContent = $('<div>')
+            var qContent = $('<h5>')
             var aContent = $('<p>')
 
             var question = decodeURIComponent(response.results[i].question);
@@ -139,8 +145,10 @@
             qContent.text(question);
             aContent.text(answer);
 
-            contentDiv.append(qContent);
-            contentDiv.append(aContent);
+            collectedContent.append(qContent);
+            collectedContent.append(aContent);
+
+            contentDiv.prepend(collectedContent);
 
             console.log(question);
             console.log(answer);
@@ -165,7 +173,8 @@
             for (i = 0; i < jokeData.length; i++) {
 
               var contentDiv = $('#renderContent')
-              var qContent = $('<h1>')
+              var collectedContent = $('<div>')
+              var qContent = $('<h5>')
               var aContent = $('<p>')
 
               var jokeSetup = response[i].setup;
@@ -174,12 +183,16 @@
               qContent.text(jokeSetup);
               aContent.text(jokePayoff);
 
-              contentDiv.append(qContent);
-              contentDiv.append(aContent);
+
+              collectedContent.append(qContent);
+              collectedContent.append(aContent);
+
+              contentDiv.prepend(collectedContent);
             };
           } else if (category === 'random') {
             var contentDiv = $('#renderContent')
-            var qContent = $('<h1>')
+            var collectedContent = $('<div>')
+            var qContent = $('<h5>')
             var aContent = $('<p>')
 
             var jokeSetup = response.setup;
@@ -188,8 +201,11 @@
             qContent.text(jokeSetup);
             aContent.text(jokePayoff);
 
-            contentDiv.append(qContent);
-            contentDiv.append(aContent);
+
+            collectedContent.append(qContent);
+            collectedContent.append(aContent);
+
+            contentDiv.prepend(collectedContent);
 
           }
 

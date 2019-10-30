@@ -8,7 +8,7 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
- 
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel='stylesheet' type='text/css' href='style.css'>
@@ -16,64 +16,80 @@
 </head>
 
 <body>
-  <nav>
+  <!-- Now alligns with text properly -->
+  <nav class="nav-extended">
     <div class="nav-wrapper">
-      <p class="brand-logo center" id="title">Social Ear Whisper</p>
-      <i class='exampleQuote1'>"If one door closes and another door opens... your house is probably haunted."</i></p>
+      <div class="nav-content">
+        <span class="nav-title">Social Ear Whisper</span>
+        <i class='exampleQuote1'>"If one door closes and another door opens... your house is probably haunted."</i>
+      </div>
     </div>
   </nav>
+
   <div class="container">
-    <h1 class='header'>Welcome!</h1>
-    <i class='exampleQuote2'>"Don't cry because it's over, smile because it happened." -- Dr. Seuss</i>
-  </div>
+    <div class='row'>
+      <!-- get this centered and prevent displacement of first dropdwn -->
+      <div class="col s12">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Welcome!</span>
+            <p>"Don't cry because it's over, smile because it happened." -- Dr. Seuss</p>
+          </div>
+          <div class="card-action">
+            <!-- Trivia Dropdwn -->
+            <div class="input-field col s6">
+              <select id="Qtype">
+                <option value="" disabled selected>Interesting options</option>
+                <option value="9">General</option>
+                <option value="10">Books</option>
+                <option value="11">Film</option>
+                <option value="12">Music</option>
+                <option value="13">Broadway/Musicals</option>
+                <option value="14">TV</option>
+                <option value="15">Video Games</option>
+                <option value="16">Board Games</option>
+                <option value="17">Science</option>
+                <option value="18">Computers</option>
+                <option value="19">Math</option>
+                <option value="20">Mythology</option>
+                <option value="21">Sports</option>
+                <option value="22">Geography</option>
+                <option value="23">Politics</option>
+                <option value="24">History</option>
+                <option value="25">Art</option>
+                <option value="26">Celebs</option>
+                <option value="27">Animals</option>
+                <option value="28">Vehicles</option>
+                <option value="29">Comics</option>
+                <option value="30">Gadgets</option>
+                <option value="31">Anime/Manga</option>
+                <option value="31">Cartoons</option>
+              </select>
+            </div>
+            <!-- Jokes Dropdwon -->
+            <div class="input-field col s6">
+              <select id="option">
+                <option value="" disabled selected>Funny options</option>
+                <option value="random">One Joke</option>
+                <option value="ten">Ten Jkes</option>
+              </select>
 
-  ​
-  <div class="input-field col s12">
-    <select id="Qtype">
-      <option value="" disabled selected>Interesting options</option>
-      <option value="9">General</option>
-      <option value="10">Books</option>
-      <option value="11">Film</option>
-      <option value="12">Music</option>
-      <option value="13">Broadway/Musicals</option>
-      <option value="14">TV</option>
-      <option value="15">Video Games</option>
-      <option value="16">Board Games</option>
-      <option value="17">Science</option>
-      <option value="18">Computers</option>
-      <option value="19">Math</option>
-      <option value="20">Mythology</option>
-      <option value="21">Sports</option>
-      <option value="22">Geography</option>
-      <option value="23">Politics</option>
-      <option value="24">History</option>
-      <option value="25">Art</option>
-      <option value="26">Celebs</option>
-      <option value="27">Animals</option>
-      <option value="28">Vehicles</option>
-      <option value="29">Comics</option>
-      <option value="30">Gadgets</option>
-      <option value="31">Anime/Manga</option>
-      <option value="31">Cartoons</option>
-    </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <button id="clear">Resets</button>
 
-  </div>
-  ​
-  <div class="input-field2 col s12">
-    <select id="option">
-      <option value="" disabled selected>Funny options</option>
-      <option value="random">One Joke</option>
-      <option value="ten">Ten Jkes</option>
-    </select>
+    <div class='col s 12' id="renderContent">
+      ​
+    </div>
 
-  </div>
-  <button id="clear">Resets</button>
-  <div id="renderContent">
-    ​
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script text="text/javascript">
-   
+
     // Universal Variables
     var dropdwn = $('#Qtype');
 
@@ -94,9 +110,9 @@
 
     resetBtn.on('click', function (event) {
 
-      $('#container').empty();
+      $('#renderContent').empty();
     });
-
+// needs to prepend current content
     function renderTriviaData() {
       // gets values for URL based on count and type
       var jokeCount = "5";
@@ -113,7 +129,7 @@
           console.log(response)
           fiveQData = response.results
           for (i = 0; i < fiveQData.length; i++) {
-            var contentDiv = $('#container')
+            var contentDiv = $('#renderContent')
             var qContent = $('<h1>')
             var aContent = $('<p>')
 
@@ -148,7 +164,7 @@
           if (category === 'ten') {
             for (i = 0; i < jokeData.length; i++) {
 
-              var contentDiv = $('#container')
+              var contentDiv = $('#renderContent')
               var qContent = $('<h1>')
               var aContent = $('<p>')
 
@@ -162,7 +178,7 @@
               contentDiv.append(aContent);
             };
           } else if (category === 'random') {
-            var contentDiv = $('#container')
+            var contentDiv = $('#renderContent')
             var qContent = $('<h1>')
             var aContent = $('<p>')
 

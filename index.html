@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <!--Import Google Icon Font-->
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <!--Import materialize.css-->
-     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     <link rel = 'stylesheet' type = 'text/css' href = './assets/css/style.css'>
-    <title>Social Ear Whisper</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel='stylesheet' type='text/css' href='style.css'>
+  <title>Social Ear Whisper</title>
 </head>
+
 <body>
   <nav>
     <div class="nav-wrapper">
-      <p class="brand-logo center" id = "title">Social Ear Whisper</p>
-      <i class= 'exampleQuote1'>"If one door closes and another door opens... your house is probably haunted."</i></p>
+      <p class="brand-logo center" id="title">Social Ear Whisper</p>
+      <i class='exampleQuote1'>"If one door closes and another door opens... your house is probably haunted."</i></p>
     </div>
   </nav>
   <div class="container">
-      <h1 class = 'header'>Welcome!</h1>
-      <i class= 'exampleQuote2'>"Don't cry because it's over, smile because it happened." -- Dr. Seuss</i>
+    <h1 class='header'>Welcome!</h1>
+    <i class='exampleQuote2'>"Don't cry because it's over, smile because it happened." -- Dr. Seuss</i>
   </div>
-  
-​
+
+  ​
   <div class="input-field col s12">
     <select id="Qtype">
       <option value="" disabled selected>Interesting options</option>
@@ -54,136 +56,133 @@
       <option value="31">Anime/Manga</option>
       <option value="31">Cartoons</option>
     </select>
-   
+
   </div>
-​
+  ​
   <div class="input-field2 col s12">
     <select id="option">
       <option value="" disabled selected>Funny options</option>
       <option value="random">One Joke</option>
       <option value="ten">Ten Jkes</option>
     </select>
-    
+
   </div>
   <button id="clear">Resets</button>
-  <div id= "renderContent">
-​
+  <div id="renderContent">
+    ​
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script text="text/javascript">
-      // Universal Variables
-      var dropdwn = $('#Qtype');
-​
-      var jokeOp = $('#option');
-​
-      var resetBtn = $('#clear');
-​
-      dropdwn.change("click", function (event) {
-          event.preventDefault();
-          renderTriviaData();
-      });
-​
-​
-      jokeOp.change("click", function (event) {
-          event.preventDefault();
-          renderJokeData();
-      });
-​
-      resetBtn.on('click', function (event) {
-​
-          $('#container').empty();
-      });
-​
-      function renderTriviaData() {
-          // gets values for URL based on count and type
-          var jokeCount = "5";
-          var type = $('#Qtype').val();
-          var triviaURL = "https://opentdb.com/api.php?amount=" + jokeCount + "&category=" + type + "&difficulty=easy&encode=url3986"
-​
-          console.log(type)
-          $.ajax({
-​
-              url: triviaURL,
-              method: "GET"
-          })
-              .then(function (response) {
-                  console.log(response)
-                  fiveQData = response.results
-                  for (i = 0; i < fiveQData.length; i++) {
-                      var contentDiv = $('#container')
-                      var qContent = $('<h1>')
-                      var aContent = $('<p>')
-​
-                      var question = decodeURIComponent(response.results[i].question);
-                      var answer = decodeURIComponent(response.results[i].correct_answer);
-​
-                      qContent.text(question);
-                      aContent.text(answer);
-​
-                      contentDiv.append(qContent);
-                      contentDiv.append(aContent);
-​
-                      console.log(question);
-                      console.log(answer);
-                  };
-              });
-      }
-​
-      function renderJokeData() {
-          // jokes API URL
-          category = $('#option').val();
-​
-          jokeURL = 'https://official-joke-api.appspot.com/jokes/' + category;
-          $.ajax({
-​
-              url: jokeURL,
-              method: "GET"
-          })
-              .then(function (response) {
-                  console.log(response)
-                  var jokeData = response
-                  if (category === 'ten') {
-                      for (i = 0; i < jokeData.length; i++) {
-​
-                          var contentDiv = $('#container')
-                          var qContent = $('<h1>')
-                          var aContent = $('<p>')
-​
-                          var jokeSetup = response[i].setup;
-                          var jokePayoff = response[i].punchline;
-​
-                          qContent.text(jokeSetup);
-                          aContent.text(jokePayoff);
-​
-                          contentDiv.append(qContent);
-                          contentDiv.append(aContent);
-                      };
-                  } else if (category === 'random') {
-                      var contentDiv = $('#container')
-                      var qContent = $('<h1>')
-                      var aContent = $('<p>')
-​
-                      var jokeSetup = response.setup;
-                      var jokePayoff = response.punchline;
-​
-                      qContent.text(jokeSetup);
-                      aContent.text(jokePayoff);
-​
-                      contentDiv.append(qContent);
-                      contentDiv.append(aContent);
-​
-                  }
-​
-              });
-      };
-​
+   
+    // Universal Variables
+    var dropdwn = $('#Qtype');
+
+    var jokeOp = $('#option');
+
+    var resetBtn = $('#clear');
+
+    dropdwn.change("click", function (event) {
+      event.preventDefault();
+      renderTriviaData();
+    });
+
+
+    jokeOp.change("click", function (event) {
+      event.preventDefault();
+      renderJokeData();
+    });
+
+    resetBtn.on('click', function (event) {
+
+      $('#container').empty();
+    });
+
+    function renderTriviaData() {
+      // gets values for URL based on count and type
+      var jokeCount = "5";
+      var type = $('#Qtype').val();
+      var triviaURL = "https://opentdb.com/api.php?amount=" + jokeCount + "&category=" + type + "&difficulty=easy&encode=url3986"
+
+      console.log(type)
+      $.ajax({
+
+        url: triviaURL,
+        method: "GET"
+      })
+        .then(function (response) {
+          console.log(response)
+          fiveQData = response.results
+          for (i = 0; i < fiveQData.length; i++) {
+            var contentDiv = $('#container')
+            var qContent = $('<h1>')
+            var aContent = $('<p>')
+
+            var question = decodeURIComponent(response.results[i].question);
+            var answer = decodeURIComponent(response.results[i].correct_answer);
+
+            qContent.text(question);
+            aContent.text(answer);
+
+            contentDiv.append(qContent);
+            contentDiv.append(aContent);
+
+            console.log(question);
+            console.log(answer);
+          };
+        });
+    }
+
+    function renderJokeData() {
+      // jokes API URL
+      category = $('#option').val();
+
+      jokeURL = 'https://official-joke-api.appspot.com/jokes/' + category;
+      $.ajax({
+
+        url: jokeURL,
+        method: "GET"
+      })
+        .then(function (response) {
+          console.log(response)
+          var jokeData = response
+          if (category === 'ten') {
+            for (i = 0; i < jokeData.length; i++) {
+
+              var contentDiv = $('#container')
+              var qContent = $('<h1>')
+              var aContent = $('<p>')
+
+              var jokeSetup = response[i].setup;
+              var jokePayoff = response[i].punchline;
+
+              qContent.text(jokeSetup);
+              aContent.text(jokePayoff);
+
+              contentDiv.append(qContent);
+              contentDiv.append(aContent);
+            };
+          } else if (category === 'random') {
+            var contentDiv = $('#container')
+            var qContent = $('<h1>')
+            var aContent = $('<p>')
+
+            var jokeSetup = response.setup;
+            var jokePayoff = response.punchline;
+
+            qContent.text(jokeSetup);
+            aContent.text(jokePayoff);
+
+            contentDiv.append(qContent);
+            contentDiv.append(aContent);
+
+          }
+
+        });
+    };
+
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src='script.js'></script>
 </body>
 
-
-
-    <script src="./assets/js/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>  
-</body>
 </html>

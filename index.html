@@ -10,15 +10,14 @@
   <!--Import materialize.css-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <title>Social Ear Whisper</title>
+  <title>Social Ear Piece</title>
 </head>
 
 <body>
-  <!-- Now alligns with text properly -->
   <nav class="nav-extended">
     <div class="nav-wrapper">
       <div class="nav-content">
-        <span class="nav-title">Social Ear Whisper</span>
+        <span class="nav-title">Social Ear Piece</span>
         <i class='center-align'>"If one door closes and another door opens... your house is probably haunted."</i>
       </div>
     </div>
@@ -34,8 +33,8 @@
           </div>
           <div class="card-action">
             <!-- Trivia Dropdwn -->
-            <div class="input-field col s6">
-              <select id="Qtype">
+            <div class="input-field col s4">
+              <select id="triviaSub">
                 <option value="" disabled selected>Interesting options</option>
                 <option value="9">General</option>
                 <option value="10">Books</option>
@@ -63,14 +62,19 @@
                 <option value="31">Cartoons</option>
               </select>
             </div>
+            <div class="col s2">
+              <a class="waves-effect waves-light btn-small" id="moreTrivia">More!</a>
+            </div>
             <!-- Jokes Dropdwon -->
-            <div class="input-field col s6">
+            <div class="input-field col s4">
               <select id="option">
                 <option value="" disabled selected>Funny options</option>
                 <option value="random">One Joke</option>
                 <option value="ten">Ten Jokes</option>
               </select>
-
+            </div>
+            <div class="col s2">
+              <a class="waves-effect waves-light btn-small" id="moreJokes">More!</a>
             </div>
           </div>
         </div>
@@ -93,72 +97,78 @@
   <script text="text/javascript">
 
     // Universal Variables
-    var dropdwn = $('#Qtype');
+    var dropdwn = $('#triviaSub');
 
     var jokeOp = $('#option');
 
     var resetBtn = $('#clear');
+
+    var moreTriviaBtn = $('#moreTrivia');
+
+    var moreJokesBtn = $('#moreJokes');
 
     dropdwn.change("click", function (event) {
       event.preventDefault();
       renderTriviaData();
     });
 
-
     jokeOp.change("click", function (event) {
       event.preventDefault();
       renderJokeData();
     });
 
-    resetBtn.on('click', function (event) {
+    moreTriviaBtn.on ('click', function(event) {
+      event.preventDefault();
+      renderTriviaData();
+    });
 
+    moreJokesBtn.on ('click', function(event) {
+      event.preventDefault();
+      renderJokeData();
+    });
+
+    resetBtn.on('click', function (event) {
       $('#renderContent').empty();
     });
     function renderTriviaData() {
       // gets values for URL based on count and type
-      var jokeCount = "5";
-      var type = $('#Qtype').val();
-      var triviaURL = "https://opentdb.com/api.php?amount=" + jokeCount + "&category=" + type + "&difficulty=easy&encode=url3986"
-
-      console.log(type)
+      var triviaCount = "3";
+      var subject = $('#triviaSub').val();
+      var triviaURL = "https://opentdb.com/api.php?amount=" + triviaCount + "&category=" + subject + "&difficulty=easy&encode=url3986"
       $.ajax({
 
         url: triviaURL,
         method: "GET"
       })
         .then(function (response) {
-          console.log(response)
-          fiveQData = response.results
+          var fiveQData = response.results
           for (i = 0; i < fiveQData.length; i++) {
 
             var question = decodeURIComponent(response.results[i].question);
             var answer = decodeURIComponent(response.results[i].correct_answer);
 
-            var contentDiv = $('#contentContainer')
-            var unlistedEl = $('#renderContent')
-            var listedEl = $('<li>')
-            var headerDiv = $('<div>').attr('class', 'collapsible-header')
-            var bodyDiv = $('<div>').attr('class', 'collapsible-body')
-            var span = $('<span>')
+            var contentDiv = $('#contentContainer');
+            var unlistedEl = $('#renderContent');
+            var listedEl = $('<li>');
+            var headerDiv = $('<div>').attr('class', 'collapsible-header');
+            var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+            var span = $('<span>');
 
-            span.text(answer)
-            headerDiv.text(question)
+            span.text(answer);
+            headerDiv.text(question);
 
-            bodyDiv.append(span)
+            bodyDiv.append(span);
 
-            listedEl.append(headerDiv)
-            listedEl.append(bodyDiv)
+            listedEl.append(headerDiv);
+            listedEl.append(bodyDiv);
 
-            unlistedEl.prepend(listedEl)
-            console.log(question);
-            console.log(answer);
+            unlistedEl.prepend(listedEl);
           };
         });
     }
     function renderJokeData() {
       // jokes API URL
       category = $('#option').val();
-
       jokeURL = 'https://official-joke-api.appspot.com/jokes/' + category;
       $.ajax({
 
@@ -166,50 +176,49 @@
         method: "GET"
       })
         .then(function (response) {
-          console.log(response)
-          var jokeData = response
+          var jokeData = response;
           if (category === 'ten') {
             for (i = 0; i < jokeData.length; i++) {
-              var contentDiv = $('#contentContainer')
-              var unlistedEl = $('#renderContent')
-              var listedEl = $('<li>')
-              var headerDiv = $('<div>').attr('class', 'collapsible-header')
-              var bodyDiv = $('<div>').attr('class', 'collapsible-body')
-              var span = $('<span>')
+              var contentDiv = $('#contentContainer');
+              var unlistedEl = $('#renderContent');
+              var listedEl = $('<li>');
+              var headerDiv = $('<div>').attr('class', 'collapsible-header');
+              var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+              var span = $('<span>');
 
               var jokeSetup = response[i].setup;
               var jokePayoff = response[i].punchline;
 
-              span.text(jokePayoff)
-              headerDiv.text(jokeSetup)
+              span.text(jokePayoff);
+              headerDiv.text(jokeSetup);
 
-              bodyDiv.append(span)
+              bodyDiv.append(span);
 
-              listedEl.append(headerDiv)
-              listedEl.append(bodyDiv)
+              listedEl.append(headerDiv);
+              listedEl.append(bodyDiv);
 
-              unlistedEl.prepend(listedEl)
+              unlistedEl.prepend(listedEl);
             };
           } else if (category === 'random') {
-            var contentDiv = $('#contentContainer')
-            var unlistedEl = $('#renderContent')
-            var listedEl = $('<li>')
-            var headerDiv = $('<div>').attr('class', 'collapsible-header')
-            var bodyDiv = $('<div>').attr('class', 'collapsible-body')
-            var span = $('<span>')
+            var contentDiv = $('#contentContainer');
+            var unlistedEl = $('#renderContent');
+            var listedEl = $('<li>');
+            var headerDiv = $('<div>').attr('class', 'collapsible-header');
+            var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+            var span = $('<span>');
 
             var jokeSetup = response.setup;
             var jokePayoff = response.punchline;
 
-            span.text(jokePayoff)
-            headerDiv.text(jokeSetup)
+            span.text(jokePayoff);
+            headerDiv.text(jokeSetup);
 
-            bodyDiv.append(span)
+            bodyDiv.append(span);
 
-            listedEl.append(headerDiv)
-            listedEl.append(bodyDiv)
+            listedEl.append(headerDiv);
+            listedEl.append(bodyDiv);
 
-            unlistedEl.prepend(listedEl)
+            unlistedEl.prepend(listedEl);
           }
 
         });

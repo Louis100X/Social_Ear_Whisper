@@ -8,7 +8,6 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <title>Social Ear Whisper</title>
@@ -115,7 +114,6 @@
 
       $('#renderContent').empty();
     });
-    // needs to prepend current content
     function renderTriviaData() {
       // gets values for URL based on count and type
       var jokeCount = "5";
@@ -151,16 +149,12 @@
             listedEl.append(headerDiv)
             listedEl.append(bodyDiv)
 
-            unlistedEl.append(listedEl)
-
-            contentDiv.prepend(unlistedEl)
-
+            unlistedEl.prepend(listedEl)
             console.log(question);
             console.log(answer);
           };
         });
     }
-// doesnt prepend
     function renderJokeData() {
       // jokes API URL
       category = $('#option').val();
@@ -194,9 +188,7 @@
               listedEl.append(headerDiv)
               listedEl.append(bodyDiv)
 
-              unlistedEl.append(listedEl)
-
-              contentDiv.prepend(unlistedEl)
+              unlistedEl.prepend(listedEl)
             };
           } else if (category === 'random') {
             var contentDiv = $('#contentContainer')
@@ -217,10 +209,7 @@
             listedEl.append(headerDiv)
             listedEl.append(bodyDiv)
 
-            unlistedEl.append(listedEl)
-
-            contentDiv.prepend(unlistedEl)
-
+            unlistedEl.prepend(listedEl)
           }
 
         });

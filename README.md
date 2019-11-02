@@ -14,14 +14,13 @@ The purpose of this group project is to use two different APIs and develop a mea
 ​
 The functionality of this project is to allow users to start a conversation or engage in an interesting or funny converstaion by providing them with funny/interesting jokes. Within the dropdown selection feature, users can pick from variety of different jokes. Once selected, the answers to all the jokes will be hidden on default and will be revealed if users click on the question/statement.
 ​
-#### Link
 Link to github page: https://github.com/Louis100X/Social_Ear_Whisper
 ​
 #### Website image:
 ​
-![image info](./Screen Shot 2019-11-02 at 9.30.16 AM.png)
+HomePage.png
 ​
 #### Application Diagram:
 ​
-![image info](./Diagram.png)
+ Diagram.png
 ​

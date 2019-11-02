@@ -24,5 +24,4 @@ Link to github page: https://github.com/Louis100X/Social_Ear_Whisper
 #### Application Diagram:
 ​
 ![image info](./Diagram.png)
- Diagram.png
 ​

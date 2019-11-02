@@ -19,7 +19,7 @@ Link to github page: https://github.com/Louis100X/Social_Ear_Whisper
 ​
 #### Website image:
 ​
-![image info](./Screen Shot 2019-11-02 at 9.30.16 AM.png)
+![image info](./website.png)
 ​
 #### Application Diagram:
 ​

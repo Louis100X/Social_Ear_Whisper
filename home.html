@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Social Ear Piece</title>
+</head>
+
+<body>
+  <nav class="nav-extended">
+    <div class="nav-wrapper">
+      <div class="nav-content">
+        <span class="nav-title">Social Ear Piece</span>
+        <i class='center-align'>"If one door closes and another door opens... your house is probably haunted."</i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class='row'>
+      <div class="col s12">
+        <div class="card blue-grey darken-1 z-depth-3">
+          <div class="card-content white-text">
+            <span class="card-title center-align">Welcome!</span>
+            <p class="center-align">"Don't cry because it's over, smile because it happened." -- Dr. Seuss</p>
+          </div>
+          <div class="card-action">
+            <!-- Trivia Dropdwn -->
+            <div class="input-field col s4">
+              <select id="triviaSub">
+                <option value="" disabled selected>Interesting options</option>
+                <option value="9">General</option>
+                <option value="10">Books</option>
+                <option value="11">Film</option>
+                <option value="12">Music</option>
+                <option value="13">Broadway/Musicals</option>
+                <option value="14">TV</option>
+                <option value="15">Video Games</option>
+                <option value="16">Board Games</option>
+                <option value="17">Science</option>
+                <option value="18">Computers</option>
+                <option value="19">Math</option>
+                <option value="20">Mythology</option>
+                <option value="21">Sports</option>
+                <option value="22">Geography</option>
+                <option value="23">Politics</option>
+                <option value="24">History</option>
+                <option value="25">Art</option>
+                <option value="26">Celebs</option>
+                <option value="27">Animals</option>
+                <option value="28">Vehicles</option>
+                <option value="29">Comics</option>
+                <option value="30">Gadgets</option>
+                <option value="31">Anime/Manga</option>
+                <option value="31">Cartoons</option>
+              </select>
+            </div>
+            <div class="col s2">
+              <a class="waves-effect waves-light btn-small" id="moreTrivia">More!</a>
+            </div>
+            <!-- Jokes Dropdwon -->
+            <div class="input-field col s4">
+              <select id="option">
+                <option value="" disabled selected>Funny options</option>
+                <option value="random">One Joke</option>
+                <option value="ten">Ten Jokes</option>
+              </select>
+            </div>
+            <div class="col s2">
+              <a class="waves-effect waves-light btn-small" id="moreJokes">More!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s5"></div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn-large" id="clear">Resets</a>
+      </div>
+      <div class="col s5"></div>
+    </div>
+
+    <div class='col s12 center-align' id="contentContainer">
+      ​<ul class='collapsible' id='renderContent'></ul>
+    </div>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script text="text/javascript">
+
+    // Universal Variables
+    var dropdwn = $('#triviaSub');
+
+    var jokeOp = $('#option');
+
+    var resetBtn = $('#clear');
+
+    var moreTriviaBtn = $('#moreTrivia');
+
+    var moreJokesBtn = $('#moreJokes');
+
+    dropdwn.change("click", function (event) {
+      event.preventDefault();
+      renderTriviaData();
+    });
+
+    jokeOp.change("click", function (event) {
+      event.preventDefault();
+      renderJokeData();
+    });
+
+    moreTriviaBtn.on ('click', function(event) {
+      event.preventDefault();
+      renderTriviaData();
+    });
+
+    moreJokesBtn.on ('click', function(event) {
+      event.preventDefault();
+      renderJokeData();
+    });
+
+    resetBtn.on('click', function (event) {
+      $('#renderContent').empty();
+    });
+    function renderTriviaData() {
+      // gets values for URL based on count and type
+      var triviaCount = "3";
+      var subject = $('#triviaSub').val();
+      var triviaURL = "https://opentdb.com/api.php?amount=" + triviaCount + "&category=" + subject + "&difficulty=easy&encode=url3986"
+      $.ajax({
+
+        url: triviaURL,
+        method: "GET"
+      })
+        .then(function (response) {
+          var fiveQData = response.results
+          for (i = 0; i < fiveQData.length; i++) {
+
+            var question = decodeURIComponent(response.results[i].question);
+            var answer = decodeURIComponent(response.results[i].correct_answer);
+
+            var contentDiv = $('#contentContainer');
+            var unlistedEl = $('#renderContent');
+            var listedEl = $('<li>');
+            var headerDiv = $('<div>').attr('class', 'collapsible-header');
+            var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+            var span = $('<span>');
+
+            span.text(answer);
+            headerDiv.text(question);
+
+            bodyDiv.append(span);
+
+            listedEl.append(headerDiv);
+            listedEl.append(bodyDiv);
+
+            unlistedEl.prepend(listedEl);
+          };
+        });
+    }
+    function renderJokeData() {
+      // jokes API URL
+      category = $('#option').val();
+      jokeURL = 'https://official-joke-api.appspot.com/jokes/' + category;
+      $.ajax({
+
+        url: jokeURL,
+        method: "GET"
+      })
+        .then(function (response) {
+          var jokeData = response;
+          if (category === 'ten') {
+            for (i = 0; i < jokeData.length; i++) {
+              var contentDiv = $('#contentContainer');
+              var unlistedEl = $('#renderContent');
+              var listedEl = $('<li>');
+              var headerDiv = $('<div>').attr('class', 'collapsible-header');
+              var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+              var span = $('<span>');
+
+              var jokeSetup = response[i].setup;
+              var jokePayoff = response[i].punchline;
+
+              span.text(jokePayoff);
+              headerDiv.text(jokeSetup);
+
+              bodyDiv.append(span);
+
+              listedEl.append(headerDiv);
+              listedEl.append(bodyDiv);
+
+              unlistedEl.prepend(listedEl);
+            };
+          } else if (category === 'random') {
+            var contentDiv = $('#contentContainer');
+            var unlistedEl = $('#renderContent');
+            var listedEl = $('<li>');
+            var headerDiv = $('<div>').attr('class', 'collapsible-header');
+            var bodyDiv = $('<div>').attr('class', 'collapsible-body');
+            var span = $('<span>');
+
+            var jokeSetup = response.setup;
+            var jokePayoff = response.punchline;
+
+            span.text(jokePayoff);
+            headerDiv.text(jokeSetup);
+
+            bodyDiv.append(span);
+
+            listedEl.append(headerDiv);
+            listedEl.append(bodyDiv);
+
+            unlistedEl.prepend(listedEl);
+          }
+
+        });
+    };
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src='script.js'></script>
+</body>
+
+</html>
